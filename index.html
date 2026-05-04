@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadu ❤️ Teddy Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #ff6b9d, #c44569, #ff6b9d, #f1948a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        @keyframes gradientBG {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .section {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .active {
+            display: flex !important;
+        }
+        h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px #ff1493;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff6b9d; }
+            to { text-shadow: 0 0 30px #ff1493; }
+        }
+        p {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            margin: 1rem 0;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+        #countdown {
+            font-size: clamp(1.5rem, 8vw, 3rem);
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd700;
+            margin: 20px 0;
+        }
+        .love-letter {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 90%;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        /* 🧸 TEDDY BEAR */
+        .teddy {
+            font-size: clamp(5rem, 20vw, 10rem);
+            cursor: pointer;
+            margin: 30px 0;
+            animation: bearBounce 2s infinite;
+            transition: all 0.3s ease;
+            user-select: none;
+            z-index: 10;
+        }
+        .teddy:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 20px 40px #ffd700);
+        }
+        @keyframes bearBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(0deg); }
+            40% { transform: translateY(-25px) rotate(5deg); }
+            60% { transform: translateY(-15px) rotate(-5deg); }
+        }
+        
+        /* Hearts */
+        .heart {
+            position: fixed;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 100;
+            animation: floatHeart 6s linear infinite;
+        }
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Fireworks */
+        .firework {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #ffd700;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 0 10px #ffd700;
+        }
+        @keyframes explode {
+            0% { 
+                transform: scale(0); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: scale(20); 
+                opacity: 0; 
+            }
+        }
+        
+        .celebration {
+            animation: celebration 3s infinite;
+        }
+        @keyframes celebration {
+            0%, 100% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.3) hue-rotate(90deg); }
+        }
+        
+        @media (max-width: 480px) {
+            .section { padding: 10px; }
+            .teddy { font-size: 6rem; }
+            .love-letter { padding: 20px; margin: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Intro -->
+    <div id="intro" class="section active">
+        <h1>My Aadu ❤️</h1>
+        <p id="typing-text"></p>
+        <div class="teddy" onclick="nextSection('message')">🧸</div>
+        <p>Click Bear!</p>
+    </div>
+
+    <!-- Message -->
+    <div id="message" class="section">
+        <h1>For You My Love ❤️</h1>
+        <p>Apko apke birthay ki bohot bohot badai meri butki ji aage bohot kuch hai chalo 🥺💕</p>
+        <div class="teddy" onclick="nextSection('countdown-section')">🧸</div>
+        <p>chalo bubu ghumi ghumi!</p>
+    </div>
+
+    <!-- Countdown -->
+    <div id="countdown-section" class="section">
+        <h1>Birthday Countdown 🎂</h1>
+        <div id="countdown-timer">Loading...</div>
+        <p>May 5, 2026</p>
+        <div class="teddy" onclick="startParty()">🧸</div>
+        <p>Celebrate now!</p>
+    </div>
+
+    <!-- Party -->
+    <div id="party" class="section celebration">
+        <h1>🎂 HAPPY BIRTHDAY AADU ❤️</h1>
+        <div class="teddy" onclick="nextSection('final-love')">🧸</div>
+        <p>Chalo mere saath 💖</p>
+    </div>
+
+    <!-- Final Love Letter -->
+    <div id="final-love" class="section">
+        <h1>Happy Birthday Again My Love ❤️</h1>
+        <div class="love-letter">
+            <p><strong>🌹 Meri Pyaari Aadu 💖</strong></p>Bubu ❤️,
+
+Tu meri life ki sabse pyaari feeling hai. Jab bhi tujhe yaad karta hu na, automatically smile aa jaati hai. Meri Adya, meri Aadu, meri Rasmalai… tu hi meri khushi hai.
+
+Main perfect nahi hu, par tere liye hamesha best banne ki koshish karunga. Bas tu hamesha mere saath rehna.
+
+I love you 💖
+— Tera
+            <p> <strong>I Love You More Than Words Can Say! 💕✨</strong></p>
+            <p style="margin-top:20px;font-size:1.3em;"><strong>Forever Yours ❤️</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let countdownInterval = null;
+        let isCounting = false;
+
+        // Floating Hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['❤️','💖','💕','🧸','✨'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(createHeart, 500);
+
+        // Typing Animation
+        const introText = "Meri pyaari Aadu ke liye surprise 😍";
+        let charIndex = 0;
+        function typeText() {
+            const typingElement = document.getElementById('typing-text');
+            if (charIndex < introText.length) {
+                typingElement.textContent += introText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeText, 120);
+            }
+        }
+
+        // Navigate Sections
+        function nextSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Countdown Logic
+        function startCountdown() {
+            if (isCounting) return;
+            isCounting = true;
+
+            const birthdayDate = new Date("2026-05-05T00:00:00").getTime();
+            countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const timeLeft = birthdayDate - now;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown-timer').innerHTML = "🎉 IT'S BIRTHDAY! 🎉";
+                    setTimeout(startParty, 2000);
+                    return;
+                }
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown-timer').innerHTML = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+
+        // Fireworks Effect
+        function createFirework() {
+            for (let i = 0; i < 10; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random() * window.innerWidth + 'px';
+                firework.style.top = Math.random() * window.innerHeight + 'px';
+                firework.style.animation = 'explode 1s ease-out forwards';
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+
+        // Party Celebration
+        function startParty() {
+            // Multiple fireworks
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createFirework, i * 100);
+            }
+
+            // Extra celebration hearts
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const celebHeart = document.createElement('div');
+                    celebHeart.className = 'heart';
+                    celebHeart.innerHTML = '🎉';
+                    celebHeart.style.fontSize = '2rem';
+                    celebHeart.style.left = Math.random() * 100 + 'vw';
+                    document.body.appendChild(celebHeart);
+                    setTimeout(() => celebHeart.remove(), 5000);
+                }, i * 100);
+            }
+
+            nextSection('party');
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            typeText();
+            setTimeout(() => {
+                nextSection('message');
+                setTimeout(startCountdown, 2000);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
